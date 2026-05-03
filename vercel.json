@@ -3,18 +3,18 @@
   "buildCommand": "npm run build --workspace meshai-support-client",
   "outputDirectory": "client/dist",
   "functions": {
-    "api/index.cjs": {
+    "api/index.js": {
       "includeFiles": "server/**"
     }
   },
   "rewrites": [
     {
       "source": "/health",
-      "destination": "/api/index.cjs"
+      "destination": "/api/index.js"
     },
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.cjs"
+      "destination": "/api/index.js"
     }
   ]
 }
