@@ -10,7 +10,6 @@ AI-powered customer support SaaS platform using OpenAI GPT.
 - Modern responsive UI with sidebar, navbar, and chat area
 - Dark mode, loading states, and typing indicator
 - Modular Express API and React components
-- Deployment-ready for Vercel (static UI + serverless API)
 
 ## Tech Stack
 
@@ -19,17 +18,6 @@ AI-powered customer support SaaS platform using OpenAI GPT.
 - **Data:** MongoDB (Mongoose)
 - **AI:** OpenAI API
 
-## Project layout
-
-```
-meshai-support/
-├── client/          # React app
-├── server/          # Express API (also imported by Vercel function)
-├── api/             # Vercel serverless entry (exports Express app)
-├── docs/            # Optional internal documentation
-├── .env.example
-└── README.md
-```
 
 ## Prerequisites
 
@@ -47,23 +35,15 @@ meshai-support/
 
    Edit `.env` with `OPENAI_API_KEY`, `MONGODB_URI`, and optional `OPENAI_MODEL`.
 
-2. Install dependencies:
-
-   ```bash
-   npm run install:all
-   ```
-
-   Or from repo root after adding dev deps:
+2. Install dependencies (npm **workspaces** — installs `client` + `server`):
 
    ```bash
    npm install
-   npm run install:all
    ```
 
 3. Run API and web together:
 
    ```bash
-   npm install
    npm run dev
    ```
 
@@ -82,20 +62,6 @@ Alternatively run `npm run dev --prefix server` and `npm run dev --prefix client
 | `CLIENT_URL` | CORS origin(s), comma-separated. Default `http://localhost:5173` |
 | `PORT` | API port locally. Default `3001` |
 | `VITE_API_URL` | Optional. Full API base URL for the client build (omit when API is same-origin) |
-
-## Deploying on Vercel
-
-1. Connect the repository and use the root directory as the project root.
-2. Set **Environment Variables** in Vercel: `OPENAI_API_KEY`, `MONGODB_URI`, `CLIENT_URL` (your production site URL, e.g. `https://your-app.vercel.app`), and optionally `OPENAI_MODEL`.
-3. Build settings (can rely on `vercel.json`):
-
-   - Install: installs both `server` and `client` dependencies (required for `/api`).
-   - Build: `cd client && npm install && npm run build`
-   - Output: `client/dist`
-
-4. Deploy. Requests to `/api/*` are rewritten to `api/index.js`, which runs the Express app.
-
-If the API is hosted separately, build the client with `VITE_API_URL` pointing at that API and configure `CLIENT_URL` on the server for CORS.
 
 ## API overview
 

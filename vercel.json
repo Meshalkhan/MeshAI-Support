@@ -1,7 +1,12 @@
 {
-  "buildCommand": "cd client && npm install && npm run build",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build --workspace meshai-support-client",
   "outputDirectory": "client/dist",
-  "installCommand": "npm install --prefix server && npm install --prefix client",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "server/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

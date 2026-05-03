@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-/** Reuse connection across hot reloads (local) and serverless invocations. */
 let cached = globalThis.__meshaiMongoose;
 if (!cached) {
   cached = globalThis.__meshaiMongoose = { conn: null, promise: null };
