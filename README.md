@@ -63,6 +63,20 @@ Alternatively run `npm run dev --prefix server` and `npm run dev --prefix client
 | `PORT` | API port locally. Default `3001` |
 | `VITE_API_URL` | Optional. Full API base URL for the client build (omit when API is same-origin) |
 
+## Deploying on Vercel (single project)
+
+1. Import the repo; **project root** = repository root (not `client/`).
+2. In **Settings → Environment Variables**, add (at least for **Production**): `OPENAI_API_KEY`, `MONGODB_URI`, `CLIENT_URL` = your site origin (e.g. `https://mesh-ai-support.vercel.app`), optional `OPENAI_MODEL`.
+3. **`vercel.json`** uses workspace install (`npm install`), builds the client workspace, outputs `client/dist`, and rewrites `/api/*` → `api/index.js`.
+4. **MongoDB Atlas:** allow network access from your deployment (for serverless, opening `0.0.0.0/0` is common for demos).
+5. Redeploy after changing env vars.
+
+**`FUNCTION_INVOCATION_FAILED` on `/api/*`:** Usually missing runtime deps for the serverless bundle (fixed by root **workspaces** + `npm install` at root), missing env vars, or Mongo connection blocked. Check **Deployments → Functions → Logs** for the stack trace.
+
+**HTTP 500 / 503 on `/api/chats`:** Confirm **`MONGODB_URI`** is set for **Production** (not only Preview). Atlas must allow inbound IPs (`0.0.0.0/0` for demos). The API also mounts **`/chats`** for serverless path quirks. **`CLIENT_URL`** can match your live URL; Vercel’s **`VERCEL_URL`** is accepted automatically for CORS when deployed.
+
+If the API is hosted separately, set `VITE_API_URL` at build time and configure `CLIENT_URL` for CORS.
+
 ## API overview
 
 | Method | Path | Description |
