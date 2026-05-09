@@ -11,7 +11,7 @@ async function dbMiddleware(_req, res, next) {
   if (!uri) {
     return res.status(503).json({
       error:
-        'Database not configured. Set MONGODB_URI in Vercel project Environment Variables.',
+        'Database not configured. Set MONGODB_URI in your environment variables.',
     });
   }
   try {
