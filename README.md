@@ -67,13 +67,56 @@ Alternatively run `npm run dev --prefix server` and `npm run dev --prefix client
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/health` | Health check |
-| GET | `/api/chats` | List chats |
-| POST | `/api/chats` | Create chat |
-| GET | `/api/chats/:id` | Get chat with messages |
-| DELETE | `/api/chats/:id` | Delete chat |
-| POST | `/api/chats/:id/messages` | Append user message and assistant reply |
+| `GET` | `/health` | Liveness JSON |
+| `GET` | `/api/chats` | List chat summaries |
+| `POST` | `/api/chats` | Create chat |
+| `GET` | `/api/chats/:id` | Chat with messages |
+| `DELETE` | `/api/chats/:id` | Delete chat |
+| `POST` | `/api/chats/:id/messages` | Append user message, model reply |
 
-## Goal
 
-MeshAI Support demonstrates end-to-end product skills: a polished responsive chat UI, disciplined backend layering, cloud-friendly configuration, and clear documentation for reviewers and operators. It is intended as a realistic foundation for a SaaS support surface rather than a throwaway script.
+## Mermaid diagram
+
+```mermaid
+flowchart TB
+  subgraph client [client - Vite React]
+    UI[Pages Layouts Components]
+    Hooks[Hooks]
+    ApiClient[services/api.js]
+    UI --> Hooks
+    Hooks --> ApiClient
+  end
+
+  subgraph server [server - Express]
+    Routes[routes/chatRoutes]
+    Ctrl[controllers/chatController]
+    ChatSvc[services/chatService]
+    OpenAI[services/openaiService]
+    Models[(Mongoose Chat)]
+    MW[cors / json / dbMiddleware]
+    Err[errorHandler + notFound]
+    Routes --> MW
+    MW --> Ctrl
+    Ctrl --> ChatSvc
+    ChatSvc --> Models
+    ChatSvc --> OpenAI
+    Routes --> Err
+  end
+
+  subgraph data [Data and external APIs]
+    Mongo[(MongoDB)]
+    OAI[OpenAI API]
+  end
+
+  subgraph deploy [Deployment]
+    Vercel[Vercel - static + api/index.js]
+    NodeHost[Render / Railway - Node web]
+  end
+
+  ApiClient -->|HTTPS| Vercel
+  ApiClient -->|HTTPS| NodeHost
+  Vercel --> server
+  NodeHost --> server
+  Models --> Mongo
+  OpenAI --> OAI
+```
