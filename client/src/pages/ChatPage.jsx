@@ -11,6 +11,7 @@ export function ChatPage() {
     loadingChat,
     sending,
     error,
+    setError,
     selectChat,
     newChat,
     removeChat,
@@ -32,6 +33,7 @@ export function ChatPage() {
       loadingChat={loadingChat}
       sending={sending}
       error={error}
+      onClearError={() => setError(null)}
       onSelectChat={selectChat}
       onNewChat={newChat}
       onDeleteChat={removeChat}

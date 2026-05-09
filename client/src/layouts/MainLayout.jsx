@@ -2,6 +2,7 @@ import { Navbar } from '../components/Navbar.jsx';
 import { Sidebar } from '../components/Sidebar.jsx';
 import { MessageList } from '../components/MessageList.jsx';
 import { ChatInput } from '../components/ChatInput.jsx';
+import { AlertBanner } from '../components/ui/AlertBanner.jsx';
 
 export function MainLayout({
   chats,
@@ -11,6 +12,7 @@ export function MainLayout({
   loadingChat,
   sending,
   error,
+  onClearError,
   onSelectChat,
   onNewChat,
   onDeleteChat,
@@ -32,9 +34,9 @@ export function MainLayout({
 
         <main className="flex min-h-0 min-w-0 flex-1 flex-col">
           {error && (
-            <div className="border-b border-red-500/30 bg-red-500/10 px-4 py-2 text-center text-sm text-red-700 dark:text-red-300">
+            <AlertBanner variant="error" onDismiss={onClearError}>
               {error}
-            </div>
+            </AlertBanner>
           )}
 
           <MessageList

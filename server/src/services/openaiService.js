@@ -11,11 +11,6 @@ export function createOpenAIClient(apiKey) {
   return new OpenAI({ apiKey });
 }
 
-/**
- * @param {OpenAI} client
- * @param {{ role: string, content: string }[]} priorMessages
- * @param {string} userMessage
- */
 export async function getAssistantReply(client, priorMessages, userMessage) {
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },

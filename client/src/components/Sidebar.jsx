@@ -1,3 +1,6 @@
+import { Button } from './ui/Button.jsx';
+import { Spinner } from './ui/Spinner.jsx';
+
 export function Sidebar({
   chats,
   activeId,
@@ -9,13 +12,9 @@ export function Sidebar({
   return (
     <aside className="flex w-full flex-col border-r border-border-subtle/60 bg-surface-muted/50 dark:bg-surface-muted/30 md:w-72 md:shrink-0">
       <div className="border-b border-border-subtle/50 p-3">
-        <button
-          type="button"
-          onClick={onNew}
-          className="w-full rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-accent/20 transition hover:bg-accent/90"
-        >
+        <Button type="button" onClick={onNew} className="w-full">
           New chat
-        </button>
+        </Button>
       </div>
 
       <div className="flex-1 overflow-y-auto scroll-thin p-2">
@@ -23,13 +22,9 @@ export function Sidebar({
           Previous chats
         </p>
         {loading && (
-          <div className="space-y-2 px-1">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="h-11 animate-pulse rounded-lg bg-border-subtle/40"
-              />
-            ))}
+          <div className="flex flex-col items-center gap-3 py-6 text-ink-muted">
+            <Spinner />
+            <p className="text-xs">Loading chats</p>
           </div>
         )}
         {!loading && chats.length === 0 && (

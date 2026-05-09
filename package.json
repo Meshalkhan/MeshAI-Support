@@ -8,7 +8,10 @@
   "scripts": {
     "dev": "concurrently -n api,web -c blue,green \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
     "install:all": "npm install",
-    "build": "npm run build --workspace meshai-support-client"
+    "build": "npm run build --workspace meshai-support-client",
+    "build:client": "npm run build --workspace meshai-support-client",
+    "start": "npm run start --workspace meshai-support-server",
+    "start:prod": "npm run start --workspace meshai-support-server"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

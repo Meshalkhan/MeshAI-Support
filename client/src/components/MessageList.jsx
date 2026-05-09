@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ChatMessage } from './ChatMessage.jsx';
 import { TypingIndicator } from './TypingIndicator.jsx';
+import { Spinner } from './ui/Spinner.jsx';
 
 export function MessageList({ messages, sending, loadingChat }) {
   const bottomRef = useRef(null);
@@ -12,8 +13,8 @@ export function MessageList({ messages, sending, loadingChat }) {
   if (loadingChat) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-ink-muted">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-        <p className="text-sm">Loading conversation…</p>
+        <Spinner size="lg" />
+        <p className="text-sm">Loading conversation</p>
       </div>
     );
   }

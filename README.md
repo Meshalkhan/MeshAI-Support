@@ -76,4 +76,4 @@ Alternatively run `npm run dev --prefix server` and `npm run dev --prefix client
 
 ## Goal
 
-Demonstrate AI integration, prompt engineering, full-stack architecture, session/context handling, and SaaS-quality chat UX.
+MeshAI Support demonstrates end-to-end product skills: a polished responsive chat UI, disciplined backend layering, cloud-friendly configuration, and clear documentation for reviewers and operators. It is intended as a realistic foundation for a SaaS support surface rather than a throwaway script.

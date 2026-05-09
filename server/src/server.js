@@ -1,14 +1,18 @@
 import 'dotenv/config';
 import { createApp } from './app.js';
 import { connectDB } from './config/db.js';
-
-const port = Number(process.env.PORT) || 3001;
+import { loadEnv } from './config/env.js';
 
 async function main() {
-  await connectDB(process.env.MONGODB_URI);
+  const env = loadEnv();
+  if (!env.mongodbUri) {
+    console.error('MONGODB_URI is required');
+    process.exit(1);
+  }
+  await connectDB(env.mongodbUri);
   const app = createApp();
-  app.listen(port, () => {
-    console.log(`API listening on http://localhost:${port}`);
+  app.listen(env.port, () => {
+    console.log(`API listening on port ${env.port}`);
   });
 }
 

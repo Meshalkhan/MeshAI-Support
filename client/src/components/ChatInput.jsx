@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react';
+import { Button } from './ui/Button.jsx';
 
 export function ChatInput({ onSend, disabled, placeholder }) {
   const ref = useRef(null);
@@ -41,14 +42,9 @@ export function ChatInput({ onSend, disabled, placeholder }) {
           onInput={onInput}
           className="max-h-40 min-h-[44px] flex-1 resize-none rounded-xl border border-border-subtle/80 bg-surface px-4 py-2.5 text-sm text-ink shadow-sm outline-none ring-accent/0 transition placeholder:text-ink-muted focus:border-accent/50 focus:ring-2 focus:ring-accent/25 disabled:opacity-50"
         />
-        <button
-          type="button"
-          onClick={submit}
-          disabled={disabled}
-          className="shrink-0 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-accent/25 transition hover:bg-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
+        <Button type="button" onClick={submit} disabled={disabled} className="shrink-0">
           Send
-        </button>
+        </Button>
       </div>
     </div>
   );

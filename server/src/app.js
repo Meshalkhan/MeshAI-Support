@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import chatRoutes from './routes/chatRoutes.js';
+import { allowedOrigins } from './config/cors.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { notFound } from './middleware/notFound.js';
 import { connectDB } from './config/db.js';
 
 async function dbMiddleware(_req, res, next) {
@@ -20,19 +22,9 @@ async function dbMiddleware(_req, res, next) {
   }
 }
 
-/** Some serverless gateways forward `/api/chats` as `/chats`; mount both. */
 function mountChats(app) {
   app.use('/api/chats', dbMiddleware, chatRoutes);
   app.use('/chats', dbMiddleware, chatRoutes);
-}
-
-function allowedOrigins() {
-  const raw = process.env.CLIENT_URL || 'http://localhost:5173';
-  const list = raw.split(',').map((s) => s.trim()).filter(Boolean);
-  if (process.env.VERCEL_URL) {
-    list.push(`https://${process.env.VERCEL_URL}`);
-  }
-  return [...new Set(list)];
 }
 
 export function createApp() {
@@ -52,11 +44,16 @@ export function createApp() {
   app.use(express.json({ limit: '1mb' }));
 
   app.get('/health', (_req, res) => {
-    res.json({ ok: true, service: 'meshai-support-api' });
+    res.json({
+      ok: true,
+      service: 'meshai-support-api',
+      env: process.env.NODE_ENV || 'development',
+    });
   });
 
   mountChats(app);
 
+  app.use(notFound);
   app.use(errorHandler);
 
   return app;
