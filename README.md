@@ -25,7 +25,7 @@ AI-powered customer support SaaS platform using OpenAI GPT.
 - MongoDB connection string (Atlas or local)
 - OpenAI API key
 
-## Local development
+## Setup
 
 1. Copy environment variables:
 
